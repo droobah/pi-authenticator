@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="io.flutter.plugins.firebasemessaging">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="io.flutter.plugins.firebasemessaging">
 
   <application>
     <service android:name=".FlutterFirebaseMessagingService">
@@ -11,5 +12,11 @@
       <meta-data android:name="com.google.firebase.components:io.flutter.plugins.firebasemessaging.FlutterFirebaseAppRegistrar"
                  android:value="com.google.firebase.components.ComponentRegistrar" />
     </service>
+
+    <!-- remove the firebase init -->
+    <provider
+        android:name="com.google.firebase.provider.FirebaseInitProvider"
+        android:authorities="${applicationId}.firebaseinitprovider"
+        tools:node="remove" />
   </application>
 </manifest>
