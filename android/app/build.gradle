@@ -25,7 +25,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
-apply plugin: 'com.google.gms.google-services' // firebase messaging
+//apply plugin: 'com.google.gms.google-services' // firebase messaging
 
 android {
     compileSdkVersion 28
@@ -67,5 +67,5 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 
-    implementation 'com.google.firebase:firebase-messaging:20.1.2' // firebase messaging
+    implementation 'com.google.firebase:firebase-messaging:20.1.5' // firebase messaging
 }

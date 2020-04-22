@@ -65,7 +65,7 @@ dependencies:
   intl: ^0.16.0
   intl_translation: any
 
-dev_dependencies:
+ydev_dependencies:
   flutter_driver:
     sdk: flutter
   test: any
