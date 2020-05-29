@@ -14,4 +14,7 @@ import Firebase
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
+  FLTFirebaseMessagingPlugin.setPluginRegistrantCallback({ (registry: FlutterPluginRegistry) -> Void in
+      GeneratedPluginRegistrant.register(with: registry);
+    });
 }
