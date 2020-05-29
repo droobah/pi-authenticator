@@ -77,7 +77,7 @@ static NSObject<FlutterPluginRegistrar> *_registrar;
       NSLog(@"Configured the default Firebase app %@.", [FIRApp defaultApp].name);
     }
     [FIRMessaging messaging].delegate = self;
-
+*/
     // Setup background handling
     _userDefaults = [NSUserDefaults standardUserDefaults];
     _eventQueue = [[NSMutableArray alloc] init];
@@ -88,7 +88,7 @@ static NSObject<FlutterPluginRegistrar> *_registrar;
     _backgroundChannel = [FlutterMethodChannel
         methodChannelWithName:@"plugins.flutter.io/firebase_messaging_background"
               binaryMessenger:[_headlessRunner binaryMessenger]];
-              */
+
   }
   return self;
 }
@@ -206,6 +206,7 @@ static NSObject<FlutterPluginRegistrar> *_registrar;
 
         [FIRMessaging messaging].delegate = self;
 
+/*
           // Setup background handling
             _userDefaults = [NSUserDefaults standardUserDefaults];
             _eventQueue = [[NSMutableArray alloc] init];
@@ -216,6 +217,7 @@ static NSObject<FlutterPluginRegistrar> *_registrar;
             _backgroundChannel = [FlutterMethodChannel
                 methodChannelWithName:@"plugins.flutter.io/firebase_messaging_background"
                       binaryMessenger:[_headlessRunner binaryMessenger]];
+                      */
       }
       else if ([@"configure" isEqualToString:method]) {
     [FIRMessaging messaging].shouldEstablishDirectChannel = true;
