@@ -1,6 +1,7 @@
 import UIKit
 import Flutter
 import Firebase
+import firebase_messaging
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -12,9 +13,11 @@ import Firebase
       UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
     }
     GeneratedPluginRegistrant.register(with: self)
+
+    FLTFirebaseMessagingPlugin.setPluginRegistrantCallback({ (registry: FlutterPluginRegistry) -> Void in
+          GeneratedPluginRegistrant.register(with: registry);
+        });
+
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
-  FLTFirebaseMessagingPlugin.setPluginRegistrantCallback({ (registry: FlutterPluginRegistry) -> Void in
-      GeneratedPluginRegistrant.register(with: registry);
-    });
 }
