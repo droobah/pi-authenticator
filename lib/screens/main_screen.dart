@@ -325,10 +325,11 @@ class _MainScreenState extends State<MainScreen> {
         print("onResume: ");
         _handleIncomingAuthRequest(message);
       },
-      onBackgroundMessage: Platform.isIOS
-          ? null
-          : // iOS does not support this.
-          myBackgroundMessageHandler, // FIXME There might be a bug when using local-notifications and firebase_messaging, see https://github.com/MaikuB/flutter_local_notifications/tree/master/flutter_local_notifications
+      onBackgroundMessage:
+//      Platform.isIOS
+//          ? null
+//          : // iOS does not support this.
+          myBackgroundMessageHandler,
     );
 
     String firebaseToken = await firebaseMessaging.getToken();
