@@ -337,6 +337,8 @@ class _MainScreenState extends State<MainScreen> {
     log("Firebase initialized, token added",
         name: "main_screen.dart", error: firebaseToken);
 
+    debugPrint('$firebaseToken');
+
     StorageUtil.saveOrReplaceGlobalFirebaseConfig(config);
 
     // The Firebase Plugin will throw a network exception, but that does not reach
@@ -369,6 +371,8 @@ class _MainScreenState extends State<MainScreen> {
   static void _handleIncomingRequest(
       Map<String, dynamic> message, List<Token> tokenList, bool inBackground) {
     var data = Platform.isIOS ? message : message['data'];
+
+    debugPrint("$message");
 
     Uri requestUri = Uri.parse(data['url']);
     String requestedSerial = data['serial'];
