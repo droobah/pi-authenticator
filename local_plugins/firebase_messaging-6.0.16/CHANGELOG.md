@@ -1,3 +1,6 @@
+## 6.0.17
+* Added iOS support for background message handling.
+
 ## 6.0.16
 
 * Update lower bound of dart dependency to 2.0.0.
