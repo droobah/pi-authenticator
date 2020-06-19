@@ -360,7 +360,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _handleIncomingAuthRequest(Map<String, dynamic> message) {
-    log("Foreground message recieved.",
+    log("Foreground message received.",
         name: "main_screen.dart", error: message);
     setState(() async {
       _handleIncomingRequest(message, await StorageUtil.loadAllTokens(), false);
