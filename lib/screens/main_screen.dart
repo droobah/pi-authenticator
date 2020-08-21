@@ -83,9 +83,7 @@ class _MainScreenState extends State<MainScreen> {
 
   _loadAllTokens() async {
     List<Token> list = await StorageUtil.loadAllTokens();
-    setState(() {
-      this._tokenList = list;
-    });
+    setState(() => this._tokenList = list);
   }
 
   @override
@@ -112,6 +110,7 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
+  // TODO Rewrite after update to 3.+ of BarcodeScanner
   _scanQRCode() async {
     try {
       String barcode = await BarcodeScanner.scan();
@@ -167,6 +166,7 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
+  // TODO Move to utils?
   Future<Token> _buildTokenFromMap(Map<String, dynamic> uriMap, Uri uri) async {
     String uuid = Uuid().v4();
     String type = uriMap[URI_TYPE];
@@ -228,6 +228,7 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
+  // TODO Move to utils?
   Future<PushToken> _buildPushToken(
       Map<String, dynamic> uriMap, String uuid) async {
     FirebaseConfig config = FirebaseConfig(
@@ -255,6 +256,7 @@ class _MainScreenState extends State<MainScreen> {
     return token;
   }
 
+  // TODO Move to utils?
   Future<String> _initFirebase(FirebaseConfig config) async {
     ArgumentError.checkNotNull(config, "config");
 
@@ -280,6 +282,7 @@ class _MainScreenState extends State<MainScreen> {
         ),
       );
 
+      // TODO Move to method
       // TODO Check if it is already initialized?
       var initializationSettingsAndroid =
           AndroidInitializationSettings('app_icon');
@@ -438,13 +441,12 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
+  // TODO Move to utils?
   static void _showNotification(
       PushToken token, PushRequest pushRequest, bool silent) async {
-
     var iOSPlatformChannelSpecifics =
         IOSNotificationDetails(presentSound: !silent);
 
-    // TODO configure - Do we need channel ids?
     var bigTextStyleInformation = BigTextStyleInformation(pushRequest.question,
         htmlFormatBigText: true,
         contentTitle: pushRequest.title,
@@ -453,9 +455,8 @@ class _MainScreenState extends State<MainScreen> {
         htmlFormatSummaryText: true);
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'privacy_idea_authenticator_push',
-      'Push challenges',
-      'Push challenges are received over firebase, if the app is in background,'
-          'a notification for each request is shown.',
+      'Push challenges', // This can be seen by the user under settings.
+      'Notifications for push challenges.',
       ticker: 'ticker',
       playSound: silent,
       styleInformation: bigTextStyleInformation, // To display token name.
@@ -487,17 +488,17 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _removeToken(Token token) async {
+    log("Removing token.", name: "main_screen.dart", error: token);
+
     await StorageUtil.deleteToken(token);
 
+    setState(() => _tokenList.remove(token));
+
+    // Delete firebase config last push token was removed
     if (!(await StorageUtil.loadAllTokens())
         .any((element) => element is PushToken)) {
       StorageUtil.deleteGlobalFirebaseConfig();
     }
-
-    setState(() {
-      print("Remove: $token");
-      _tokenList.remove(token);
-    });
   }
 
   List<Widget> _buildActionMenu() {
@@ -565,6 +566,8 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
+  // TODO Should this be static or in utils? Is is just a wrapper that can be
+  //  used everywhere.
   _showMessage(String message, Duration duration) {
     _scaffoldKey.currentState.showSnackBar(SnackBar(
       content: Text(message),
