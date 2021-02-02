@@ -109,6 +109,10 @@ class StorageUtil {
     if (token is PushToken) deleteFirebaseConfig(token);
   }
 
+  static Future<void> deleteAll() async {
+    _storage.deleteAll();
+  }
+
   // ###########################################################################
   // GLOBAL FIREBASE CONFIG
   // ###########################################################################

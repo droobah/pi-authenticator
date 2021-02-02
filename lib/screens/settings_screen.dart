@@ -21,9 +21,11 @@
 import 'dart:developer';
 
 import 'package:dynamic_theme/dynamic_theme.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:privacyidea_authenticator/model/tokens.dart';
+import 'package:privacyidea_authenticator/screens/main_screen.dart';
 import 'package:privacyidea_authenticator/utils/localization_utils.dart';
 import 'package:privacyidea_authenticator/utils/storage_utils.dart';
 import 'package:privacyidea_authenticator/widgets/settings_groups.dart';
@@ -82,6 +84,48 @@ class SettingsScreenState extends State<SettingsScreen> {
                           setState(() => _changeBrightness(value));
                         }
                       : null,
+                ),
+                ListTile(
+                  title: Text("Delete all token"),
+                  subtitle: Text("Delete all token from the secure storage. The app has to be restarted afterwards."),
+                  trailing: RaisedButton(
+                    child: Text("Delete all"),
+                    onPressed: () {
+                      showDialog<void>(
+                          context: context,
+                          barrierDismissible: false, // user must tap button!
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Confirmation'),
+                              content: SingleChildScrollView(
+                                child: ListBody(
+                                  children: <Widget>[
+                                    Text('Do you want to delete all token from the secure storage?'),
+                                    Text('This operation can not be undone.'),
+                                    Text('The app has to be restarted afterwards.'),
+                                  ],
+                                ),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text('Confirm'),
+                                  onPressed: () {
+                                    StorageUtil.deleteAll();
+                                    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text('Dismiss'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                  ),
                 ),
               ],
             ),
@@ -163,6 +207,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                               ],
                             ),
                           );
+
                           return ListTile(
                             title: title,
                             subtitle: Text(
